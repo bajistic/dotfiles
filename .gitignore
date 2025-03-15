@@ -1,0 +1,31 @@
+# Ignore everything by default
+*
+
+# Allow specific dotfiles and directories
+!.bashrc
+!.bash_profile
+!.zshrc
+!.zprofile
+!.vimrc
+!.config/
+!.config/nvim/
+!.config/nvim/**
+!.gitignore
+
+# Explicitly ignore sensitive or irrelevant files/directories
+.secrets
+.env
+.cache/
+.ssh/
+.git-credentials
+.local/
+Downloads/
+Documents/
+Desktop/
+Pictures/
+Movies/
+Music/
+*.log
+*.swp
+*.bak
+.secrets

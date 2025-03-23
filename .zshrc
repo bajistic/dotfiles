@@ -162,3 +162,6 @@ alias zshrc="nvim ~/.zshrc"
 if [ -f ~/.secrets ]; then
     source ~/.secrets
 fi
+export LANG=en_US.UTF-8
+export PATH="/opt/homebrew/bin:$PATH"
+export LC_ALL=en_US.UTF-8

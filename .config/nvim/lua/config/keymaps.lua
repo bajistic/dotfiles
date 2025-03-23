@@ -14,4 +14,15 @@ vim.keymap.set("v", "<C-j>", "4j", { noremap = true, silent = true })
 vim.keymap.set("v", "<C-k>", "4k", { noremap = true, silent = true })
 vim.keymap.set("v", "<C-l>", "4l", { noremap = true, silent = true })
 
+-- Neo-tree explorer mappings
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "neo-tree",
+  callback = function()
+    vim.keymap.set("n", "<C-h>", "4h", { noremap = true, silent = true, buffer = true })
+    vim.keymap.set("n", "<C-j>", "4j", { noremap = true, silent = true, buffer = true })
+    vim.keymap.set("n", "<C-k>", "4k", { noremap = true, silent = true, buffer = true })
+    vim.keymap.set("n", "<C-l>", "4l", { noremap = true, silent = true, buffer = true })
+  end,
+})
+
 -- create a simple ascii art

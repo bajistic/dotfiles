@@ -3,22 +3,7 @@
 -- Add any additional options here
 
 -- Disable line numbers
-vim.opt.number = false
+-- vim.opt.number = false
 vim.opt.relativenumber = false
-
--- Disable scrolling animation
-vim.opt.scrolloff = 0
-
--- OSC 52 clipboard support
--- vim.g.clipboard = {
---   name = "OSC 52",
---   copy = {
---     ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
---     ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
---   },
---   paste = {
---     ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
---     ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
---   },
--- }
--- vim.opt.clipboard:append({ "unnamed", "unnamedplus" })
+vim.o.title = true
+vim.o.titlestring = "%t" -- %t is the buffer’s tail (filename)

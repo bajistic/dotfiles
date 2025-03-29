@@ -25,4 +25,11 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- create a simple ascii art
+-- Move cursor to top of window
+vim.keymap.set("n", "gh", ":normal! H<CR>", { desc = "Move cursor to top of window" })
+-- Move cursor to bottom of window
+vim.keymap.set("n", "gl", ":normal! L<CR>", { desc = "Move cursor to bottom of window" })
+
+-- move between tabs
+vim.keymap.set("n", "<A-h>", "gT", { desc = "Previous tab" })
+vim.keymap.set("n", "<A-l>", "gt", { desc = "Next tab" })

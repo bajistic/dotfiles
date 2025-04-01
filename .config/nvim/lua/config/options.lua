@@ -7,3 +7,4 @@
 vim.opt.relativenumber = false
 vim.o.title = true
 vim.o.titlestring = "%t" -- %t is the buffer’s tail (filename)
+-- always_show_bufferline = true,

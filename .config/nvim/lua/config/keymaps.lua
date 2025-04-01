@@ -34,6 +34,9 @@ vim.keymap.set("n", "gl", ":normal! L<CR>", { desc = "Move cursor to bottom of w
 vim.keymap.set("n", "<A-h>", "gT", { desc = "Previous tab" })
 vim.keymap.set("n", "<A-l>", "gt", { desc = "Next tab" })
 
+-- vim.keymap.set("n", "<S-h>", ":bprevious<CR>", { desc = "Previous tab" })
+-- vim.keymap.set("n", "<S-l>", "gt", { desc = "Next tab" })
+
 local function mirror_brackets_to_umlauts()
   local mappings = {
     { "m", "method start" },
@@ -49,3 +52,7 @@ local function mirror_brackets_to_umlauts()
 end
 
 mirror_brackets_to_umlauts()
+
+vim.keymap.set("n", "<leader><tab>p", function()
+  require("bufferline").pick()
+end, { desc = "Pick tab/buffer" })

@@ -21,3 +21,12 @@ vim.api.nvim_create_autocmd("FileType", {
 -- local function set_iterm2_tab_title(title)
 --   vim.fn.execute('silent !echo -ne "\\033]0;' .. title .. '\\007"')
 -- end
+--
+-- vim.api.nvim_create_autocmd("TabNew", {
+--   callback = function()
+--     vim.cmd("enew")
+--     vim.bo.buftype = "nofile"
+--     vim.bo.bufhidden = "hide"
+--     vim.t.bufs = { vim.fn.bufnr() }
+--   end,
+-- })

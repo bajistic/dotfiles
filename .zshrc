@@ -1,3 +1,4 @@
+zmodload zsh/zprof
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -42,12 +43,12 @@ ZSH_THEME="bureau"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
 # See https://github.com/ohmyzsh/ohmyzsh/issues/5765
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -159,9 +160,13 @@ export PATH="/Users/bayarbileg/.codeium/windsurf/bin:$PATH"
 alias zshrc="nvim ~/.zshrc"
 #
 # Load secrets if they exist
-if [ -f ~/.secrets ]; then
-    source ~/.secrets
+if [ -f ~/.env ]; then
+    source ~/.env
 fi
 export LANG=en_US.UTF-8
 export PATH="/opt/homebrew/bin:$PATH"
 export LC_ALL=en_US.UTF-8
+
+zprof
+alias nv='nvim'
+alias neo='nvim'

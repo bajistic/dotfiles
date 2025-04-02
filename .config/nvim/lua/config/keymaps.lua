@@ -37,22 +37,7 @@ vim.keymap.set("n", "<A-l>", "gt", { desc = "Next tab" })
 -- vim.keymap.set("n", "<S-h>", ":bprevious<CR>", { desc = "Previous tab" })
 -- vim.keymap.set("n", "<S-l>", "gt", { desc = "Next tab" })
 
-local function mirror_brackets_to_umlauts()
-  local mappings = {
-    { "m", "method start" },
-    { "e", "error" },
-    -- Add more pairs here if needed, e.g., {"f", "function"}
-  }
-  for _, map in ipairs(mappings) do
-    local key = map[1]
-    local desc = map[2]
-    vim.keymap.set("n", "ö" .. key, "[" .. key, { desc = "Previous " .. desc })
-    vim.keymap.set("n", "ä" .. key, "]" .. key, { desc = "Next " .. desc })
-  end
-end
-
-mirror_brackets_to_umlauts()
-
+-- Pick tab/buffer
 vim.keymap.set("n", "<leader><tab>p", function()
   require("bufferline").pick()
 end, { desc = "Pick tab/buffer" })

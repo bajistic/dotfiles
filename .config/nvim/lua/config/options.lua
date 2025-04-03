@@ -12,3 +12,5 @@ vim.cmd("colorscheme delek")
 
 -- Preserve yanked text when pasting in visual mode
 vim.keymap.set("x", "p", '"_dP')
+
+vim.opt.timeoutlen = 0 -- Adjust the delay (in ms) before which-key appears

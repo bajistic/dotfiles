@@ -26,9 +26,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Move cursor to top of window
-vim.keymap.set("n", "gh", ":normal! H<CR>", { desc = "Move cursor to top of window" })
+vim.keymap.set("n", "gh", ":normal! H<CR>", { desc = "Move cursor to top of window", silent = true })
 -- Move cursor to bottom of window
-vim.keymap.set("n", "gl", ":normal! L<CR>", { desc = "Move cursor to bottom of window" })
+vim.keymap.set("n", "gl", ":normal! L<CR>", { desc = "Move cursor to bottom of window", silent = true })
 
 -- move between tabs
 vim.keymap.set("n", "<A-h>", "gT", { desc = "Previous tab" })
@@ -48,16 +48,28 @@ vim.keymap.set("n", "öb", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 vim.keymap.set("n", "äb", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 
 -- Diagnostics navigation
-vim.keymap.set("n", "öd", function() vim.diagnostic.goto_prev() end, { desc = "Prev Diagnostic" })
-vim.keymap.set("n", "äd", function() vim.diagnostic.goto_next() end, { desc = "Next Diagnostic" })
+vim.keymap.set("n", "öd", function()
+  vim.diagnostic.goto_prev()
+end, { desc = "Prev Diagnostic" })
+vim.keymap.set("n", "äd", function()
+  vim.diagnostic.goto_next()
+end, { desc = "Next Diagnostic" })
 
 -- Error navigation
-vim.keymap.set("n", "öe", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, { desc = "Prev Error" })
-vim.keymap.set("n", "äe", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, { desc = "Next Error" })
+vim.keymap.set("n", "öe", function()
+  vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+end, { desc = "Prev Error" })
+vim.keymap.set("n", "äe", function()
+  vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+end, { desc = "Next Error" })
 
 -- Warning navigation
-vim.keymap.set("n", "öw", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN }) end, { desc = "Prev Warning" })
-vim.keymap.set("n", "äw", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN }) end, { desc = "Next Warning" })
+vim.keymap.set("n", "öw", function()
+  vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
+end, { desc = "Prev Warning" })
+vim.keymap.set("n", "äw", function()
+  vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
+end, { desc = "Next Warning" })
 
 -- Quickfix navigation
 vim.keymap.set("n", "öq", function()
@@ -83,8 +95,12 @@ vim.keymap.set("n", "äq", function()
 end, { desc = "Next Trouble/Quickfix Item" })
 
 -- Todo comments navigation
-vim.keymap.set("n", "öt", function() require("todo-comments").jump_prev() end, { desc = "Previous Todo Comment" })
-vim.keymap.set("n", "ät", function() require("todo-comments").jump_next() end, { desc = "Next Todo Comment" })
+vim.keymap.set("n", "öt", function()
+  require("todo-comments").jump_prev()
+end, { desc = "Previous Todo Comment" })
+vim.keymap.set("n", "ät", function()
+  require("todo-comments").jump_next()
+end, { desc = "Next Todo Comment" })
 
 -- Git hunks navigation
 vim.keymap.set("n", "öh", function()
@@ -104,24 +120,52 @@ vim.keymap.set("n", "äh", function()
 end, { desc = "Next Hunk" })
 
 -- First/Last git hunk
-vim.keymap.set("n", "öH", function() require("gitsigns").nav_hunk("first") end, { desc = "First Hunk" })
-vim.keymap.set("n", "äH", function() require("gitsigns").nav_hunk("last") end, { desc = "Last Hunk" })
+vim.keymap.set("n", "öH", function()
+  require("gitsigns").nav_hunk("first")
+end, { desc = "First Hunk" })
+vim.keymap.set("n", "äH", function()
+  require("gitsigns").nav_hunk("last")
+end, { desc = "Last Hunk" })
 
 -- Treesitter text objects navigation
-vim.keymap.set("n", "öf", function() require("nvim-treesitter.textobjects.move").goto_previous_start("@function.outer") end, { desc = "Previous Function Start" })
-vim.keymap.set("n", "äf", function() require("nvim-treesitter.textobjects.move").goto_next_start("@function.outer") end, { desc = "Next Function Start" })
+vim.keymap.set("n", "öf", function()
+  require("nvim-treesitter.textobjects.move").goto_previous_start("@function.outer")
+end, { desc = "Previous Function Start" })
+vim.keymap.set("n", "äf", function()
+  require("nvim-treesitter.textobjects.move").goto_next_start("@function.outer")
+end, { desc = "Next Function Start" })
 
-vim.keymap.set("n", "öF", function() require("nvim-treesitter.textobjects.move").goto_previous_end("@function.outer") end, { desc = "Previous Function End" })
-vim.keymap.set("n", "äF", function() require("nvim-treesitter.textobjects.move").goto_next_end("@function.outer") end, { desc = "Next Function End" })
+vim.keymap.set("n", "öF", function()
+  require("nvim-treesitter.textobjects.move").goto_previous_end("@function.outer")
+end, { desc = "Previous Function End" })
+vim.keymap.set("n", "äF", function()
+  require("nvim-treesitter.textobjects.move").goto_next_end("@function.outer")
+end, { desc = "Next Function End" })
 
-vim.keymap.set("n", "öc", function() require("nvim-treesitter.textobjects.move").goto_previous_start("@class.outer") end, { desc = "Previous Class Start" })
-vim.keymap.set("n", "äc", function() require("nvim-treesitter.textobjects.move").goto_next_start("@class.outer") end, { desc = "Next Class Start" })
+vim.keymap.set("n", "öc", function()
+  require("nvim-treesitter.textobjects.move").goto_previous_start("@class.outer")
+end, { desc = "Previous Class Start" })
+vim.keymap.set("n", "äc", function()
+  require("nvim-treesitter.textobjects.move").goto_next_start("@class.outer")
+end, { desc = "Next Class Start" })
 
-vim.keymap.set("n", "öC", function() require("nvim-treesitter.textobjects.move").goto_previous_end("@class.outer") end, { desc = "Previous Class End" })
-vim.keymap.set("n", "äC", function() require("nvim-treesitter.textobjects.move").goto_next_end("@class.outer") end, { desc = "Next Class End" })
+vim.keymap.set("n", "öC", function()
+  require("nvim-treesitter.textobjects.move").goto_previous_end("@class.outer")
+end, { desc = "Previous Class End" })
+vim.keymap.set("n", "äC", function()
+  require("nvim-treesitter.textobjects.move").goto_next_end("@class.outer")
+end, { desc = "Next Class End" })
 
-vim.keymap.set("n", "öa", function() require("nvim-treesitter.textobjects.move").goto_previous_start("@parameter.inner") end, { desc = "Previous Parameter Start" })
-vim.keymap.set("n", "äa", function() require("nvim-treesitter.textobjects.move").goto_next_start("@parameter.inner") end, { desc = "Next Parameter Start" })
+vim.keymap.set("n", "öa", function()
+  require("nvim-treesitter.textobjects.move").goto_previous_start("@parameter.inner")
+end, { desc = "Previous Parameter Start" })
+vim.keymap.set("n", "äa", function()
+  require("nvim-treesitter.textobjects.move").goto_next_start("@parameter.inner")
+end, { desc = "Next Parameter Start" })
 
-vim.keymap.set("n", "öA", function() require("nvim-treesitter.textobjects.move").goto_previous_end("@parameter.inner") end, { desc = "Previous Parameter End" })
-vim.keymap.set("n", "äA", function() require("nvim-treesitter.textobjects.move").goto_next_end("@parameter.inner") end, { desc = "Next Parameter End" })
+vim.keymap.set("n", "öA", function()
+  require("nvim-treesitter.textobjects.move").goto_previous_end("@parameter.inner")
+end, { desc = "Previous Parameter End" })
+vim.keymap.set("n", "äA", function()
+  require("nvim-treesitter.textobjects.move").goto_next_end("@parameter.inner")
+end, { desc = "Next Parameter End" })

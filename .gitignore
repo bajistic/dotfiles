@@ -12,6 +12,7 @@
 !.config/nvim/**
 !.gitignore
 !.tmux.conf
+!.zpreztorc
 
 # Explicitly ignore sensitive or irrelevant files/directories
 .secrets

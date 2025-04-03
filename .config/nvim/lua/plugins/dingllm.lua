@@ -1,7 +1,8 @@
 return {
-  "bajistic/dingllm.nvim",
+  -- "bajistic/dingllm.nvim",
   -- Use a local directory for the plugin (e.g., for development)
-  -- dir = "/path/to/your/local/dingllm.nvim", -- Specify the path to your local clone
+  dir = "~/Projects/ZZ/dingllm.nvim", -- Specify the path to your local clone
+  dev = true,
   -- name = "dingllm", -- Often redundant if 'dir' points to a directory named 'dingllm.nvim'
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
@@ -124,7 +125,7 @@ return {
           model = "gemini-2.5-pro-exp-03-25", -- Or your preferred Gemini model
           replace = false,
           temperature = 0.8,
-          grounding = true, -- <<< ADD THIS LINE TO ENABLE GROUNDING
+          grounding = false, -- <<< ADD THIS LINE TO ENABLE GROUNDING
           max_tokens = 2048,
           -- Note: system_prompt is generally ignored by Gemini's standard API structure
           -- unless you modify make_gemini_spec_curl_args payload

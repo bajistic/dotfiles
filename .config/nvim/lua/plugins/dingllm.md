@@ -812,6 +812,153 @@ return {
   end,
 }
 ```
+# Real-time
+
+
+explain how this plugin works in detail, describe each core functions and the interplay at a low level, showing snippets and adding the explanations as a comment. also how the used vim functions work, im trying to understand all of its doings.
+
+give example inputs and outputs to the functions and how it gets processed by every line
+
+I'll break down the core functionality of this plugin:
+
+1. Core Initialization Functions:
+
+```lua
+-- This function gets called when text is selected in visual mode
+-- Returns either a table of lines or concatenated text depending on mode
+function M.get_visual_selection()
+    local _, srow, scol = unpack(vim.fn.getpos("v"))  -- Get start position of visual selection
+    local _, erow, ecol = unpack(vim.fn.getpos("."))  -- Get end position (cursor)
+
+    -- Handle different visual modes:
+    if vim.fn.mode() == "V" then  -- Line-wise visual mode
+        if srow > erow then
+            -- If selection is bottom-to-top, swap rows
+            return vim.api.nvim_buf_get_lines(0, erow - 1, srow, true)
+        else
+            return vim.api.nvim_buf_get_lines(0, srow - 1, erow, true)
+        end
+    end
+
+    -- Example input:
+    -- User selects lines 5-7 in visual line mode
+    -- Output: {"line5 content", "line6 content", "line7 content"}
+```
+
+2. Text Processing Functions:
+
+```lua
+-- Main function to write LLM responses into the buffer
+function M.write_string_at_cursor(str)
+    vim.schedule(function()  -- Schedule UI updates
+        local current_window = vim.api.nvim_get_current_win()
+        local cursor_position = vim.api.nvim_win_get_cursor(current_window)
+        local row, col = cursor_position[1], cursor_position[2]
+
+        local lines = vim.split(str, "\n")  -- Split response into lines
+        
+        vim.cmd("undojoin")  -- Combine multiple inserts into one undo step
+        vim.api.nvim_put(lines, "c", true, true)  -- Insert text at cursor
+
+        -- Example:
+        -- Input str: "Hello\nWorld"
+        -- Results in two lines being inserted at cursor position
+        -- Cursor moves to end of inserted text
+    end)
+end
+```
+
+3. API Request Handling:
+
+```lua
+-- Constructs curl arguments for different LLM APIs
+function M.make_anthropic_spec_curl_args(opts, prompt, system_prompt)
+    -- Example opts:
+    -- {
+    --   url = "https://api.anthropic.com/v1/messages",
+    --   api_key_name = "ANTHROPIC_API_KEY",
+    --   model = "claude-3-5-sonnet"
+    -- }
+    
+    local data = {
+        system = system_prompt,
+        messages = { { role = "user", content = prompt } },
+        model = opts.model,
+        stream = true,
+        max_tokens = 4096,
+    }
+    
+    -- Constructs curl command with headers and authentication
+    local args = {"-sS", "-N", "-X", "POST", "-H", "Content-Type: application/json", 
+                 "-d", vim.json.encode(data)}
+    -- Returns array of curl arguments used by plenary.job
+```
+
+4. Job Management:
+
+```lua
+-- Handles streaming responses from LLMs
+function M.invoke_llm_and_stream_into_editor(opts, make_curl_args_fn, handle_data_fn)
+    -- Example flow:
+    -- 1. User triggers command
+    -- 2. Gets prompt from selection or cursor position
+    -- 3. Creates curl job with args from make_curl_args_fn
+    -- 4. Streams responses through handle_data_fn
+    -- 5. Writes responses to buffer using write_string_at_cursor
+    
+    local active_job = Job:new({
+        command = "curl",
+        args = final_args,
+        on_stdout = function(_, out)
+            -- Process each line of streamed response
+            parse_and_call(out)
+        end
+    })
+```
+
+5. Context Handling:
+
+```lua
+function M.prompt_with_file_and_selection_context(opts, make_curl_args_fn, handle_data_fn)
+    -- Gets both full file content and selected text
+    local selection_text = table.concat(M.get_visual_selection(), "\n")
+    local full_file_content = table.concat(
+        vim.api.nvim_buf_get_lines(current_buffer, 0, -1, true), 
+        "\n"
+    )
+    
+    -- Creates prompt combining both contexts
+    local custom_prompt = string.format([[
+        Full file context:
+        %s
+        
+        Selected text to focus on:
+        %s
+    ]], full_file_content, selection_text)
+    
+    -- Example:
+    -- File content: "def main():\n    print('hello')"
+    -- Selection: "print('hello')"
+    -- Creates contextual prompt for LLM
+```
+
+The plugin uses several key Neovim API functions:
+
+- `vim.api.nvim_buf_get_lines()`: Gets lines from buffer
+- `vim.api.nvim_put()`: Inserts text into buffer
+- `vim.api.nvim_win_get_cursor()`: Gets/sets cursor position
+- `vim.schedule()`: Ensures UI operations run in main thread
+- `vim.fn.getpos()`: Gets positions in visual selection
+
+The workflow typically goes:
+1. User triggers command via keybinding
+2. Plugin gets text context (selection or file)
+3. Creates API request with appropriate args
+4. Starts job to stream responses
+5. Processes streaming responses
+6. Writes processed text to buffer
+7. Handles cleanup and error cases
+
 
 # docs
 

@@ -1,3 +1,7 @@
+if true then
+  return {}
+end
+
 return {
   -- "bajistic/dingllm.nvim",
   -- Use a local directory for the plugin (e.g., for development)

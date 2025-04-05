@@ -14,7 +14,7 @@ return {
     local function anthropic_help()
       dingllm.invoke_llm_and_stream_into_editor({
         url = "https://api.anthropic.com/v1/messages",
-        model = "claude-3-5-sonnet-20241022",
+        model = "claude-3-7-sonnet-latest",
         api_key_name = "ANTHROPIC_API_KEY",
         system_prompt = helpful_prompt,
         replace = false,
@@ -24,7 +24,7 @@ return {
     local function anthropic_replace()
       dingllm.invoke_llm_and_stream_into_editor({
         url = "https://api.anthropic.com/v1/messages",
-        model = "claude-3-5-sonnet-20241022",
+        model = "claude-3-7-sonnet-latest",
         api_key_name = "ANTHROPIC_API_KEY",
         system_prompt = system_prompt,
         replace = true,
@@ -41,7 +41,7 @@ return {
           replace = false,
           temperature = 0.8,
           grounding = false, -- <<< ADD THIS LINE TO ENABLE GROUNDING
-          max_tokens = 2048,
+          -- max_tokens = 2048,
           -- Note: system_prompt is generally ignored by Gemini's standard API structure
           -- unless you modify make_gemini_spec_curl_args payload
           -- system_prompt = helpful_prompt,
@@ -85,21 +85,21 @@ return {
       dingllm.prompt_with_file_and_selection_context({
         url = "https://api.anthropic.com/v1/messages", -- Add this line
         api_key_name = "ANTHROPIC_API_KEY",
-        model = "claude-3-5-sonnet-20240620",
+        model = "claude-3-7-sonnet-latest",
         replace = true,
       }, dingllm.make_anthropic_spec_curl_args, dingllm.handle_anthropic_spec_data)
     end
 
     -- Map the new functions
-    vim.keymap.set("v", "<leader>lE", gemini_context_selection, { desc = "Gemini File Context" })
-    vim.keymap.set("v", "<leader>le", anthropic_context_selection, { desc = "Claude File Context" })
+    vim.keymap.set("v", "<leader>iE", gemini_context_selection, { desc = "Gemini File Context" })
+    vim.keymap.set("v", "<leader>ie", anthropic_context_selection, { desc = "Claude File Context" })
 
     -- Then, set your keymaps
-    vim.keymap.set({ "n", "v" }, "<leader>lg", gemini_help, { desc = "Gemini" })
-    vim.keymap.set({ "v" }, "<leader>lG", gemini_replace, { desc = "Gemini Replace" })
+    vim.keymap.set({ "n", "v" }, "<leader>ig", gemini_help, { desc = "Gemini" })
+    vim.keymap.set({ "v" }, "<leader>iG", gemini_replace, { desc = "Gemini Replace" })
 
-    vim.keymap.set({ "n", "v" }, "<leader>li", anthropic_help, { desc = "Claude" })
-    vim.keymap.set({ "v" }, "<leader>lI", anthropic_replace, { desc = "Claude Replace" })
+    vim.keymap.set({ "n", "v" }, "<leader>ii", anthropic_help, { desc = "Claude" })
+    vim.keymap.set({ "v" }, "<leader>iI", anthropic_replace, { desc = "Claude Replace" })
     -- TODO: ADD GOOGLE SEARCH WITH GROUNDING
     -- https://ai.google.dev/gemini-api/docs/grounding?lang=rest
   end,

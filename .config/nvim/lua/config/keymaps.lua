@@ -26,9 +26,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Move cursor to top of window
-vim.keymap.set("n", "gh", ":normal! H<CR>", { desc = "Move cursor to top of window" })
+vim.keymap.set("n", "gh", ":normal! H<CR>", { desc = "Move cursor to top of window", silent = true })
 -- Move cursor to bottom of window
-vim.keymap.set("n", "gl", ":normal! L<CR>", { desc = "Move cursor to bottom of window" })
+vim.keymap.set("n", "gl", ":normal! L<CR>", { desc = "Move cursor to bottom of window", silent = true })
 
 -- move between tabs
 if vim.fn.has("macunix") == 1 then
